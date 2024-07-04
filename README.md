@@ -32,3 +32,18 @@ python main.py --data Kvasir_png_224 --epochs 120 --batch_size 16
 ```
 python main.py --data BUSI_png_224 --epochs 120 --batch_size 16
 ```
+
+## Data prepare
+按照下面的结构将数据准备好，执行main.py时会随机按照7：1：3的比例划分训练集、验证集和测试集
+```
+|—— data
+      |——ISIC2018_png_224
+          |——image
+          |——label
+      |——Kvasir_png_224
+          |——images
+          |——masks
+      |——BUSI_png_224
+          |——images
+          |——masks
+```
