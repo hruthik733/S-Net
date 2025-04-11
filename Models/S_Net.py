@@ -200,6 +200,10 @@ class S_Net(nn.Module):
         # x = self.sa(e2)
         # decoder part
         d2 = F.interpolate(self.decoder1(x), scale_factor=2, mode='bilinear')
+        # Inside your forward() function
+        if d2.shape[2:] != e1.shape[2:]:
+            e1 = F.interpolate(e1, size=d2.shape[2:], mode='bilinear', align_corners=True)
+
         d2 = torch.cat([d2, e1], 1)
 
         d1 = F.interpolate(self.decoder2(d2), scale_factor=2, mode='bilinear')

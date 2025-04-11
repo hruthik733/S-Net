@@ -109,7 +109,8 @@ def dataset_transform(sample, train_type, image_size=(224, 224)):
     # label = ts.Compose([ts.ToTensor(), ts.Grayscale()])(label)
 
     image, label = Image.fromarray(np.uint8(image), mode='RGB'), \
-                   Image.fromarray(np.uint8(label), mode='L')  # “L” (灰度图), “RGB” (彩色图)
+               Image.fromarray(np.uint8(label[:, :, 0]) if label.ndim == 3 else np.uint8(label), mode='L')
+                                # “L” (灰度图), “RGB” (彩色图)
 
     if train_type == 'train':
         image, label = randomcrop(size=image_size)(image, label)

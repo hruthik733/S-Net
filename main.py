@@ -4,6 +4,8 @@ import datetime
 import os
 import sys
 
+import torch.nn.functional as F
+
 import pandas as pd
 import imageio.v2 as imageio
 
@@ -22,6 +24,10 @@ from collections import OrderedDict
 from Models.Unet import Unet
 from Models.S_Net import S_Net
 
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
 # os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 
@@ -37,7 +43,7 @@ from Models.S_Net import S_Net
 
 def main(args):
     # 定义所用设备是cpu还是gpu
-    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     if args.data == 'ISIC2018_png_224':
         # 根据文件路径生成经过排序的图像文件名列表
@@ -345,6 +351,9 @@ def val(model, val_loader, criterion, device):
         # 输入图像计算输出
         output = model(image)   # 2,1,224,320
         output = output.detach()
+        if output.shape != label.shape:
+            label = F.interpolate(label, size=output.shape[2:], mode='bilinear', align_corners=True)
+
         score = criterion(output, label)
         # 针对2分类的一通道网络输出和二通道网络输出
         if output.shape[1] == 1:
@@ -398,6 +407,9 @@ def test(model, args, test_loader, device):
             output[output <= 0.5] = 0
         elif output.shape[1] == 2:
             output = torch.max(output, 1)[1].unsqueeze(dim=1)
+
+            
+        label = F.interpolate(label, size=output.shape[2:], mode='bilinear', align_corners=True)
         jc_, dice_ = iou_and_dice(output, label)
         iou = jc(output, label)
         dice = dc(output, label)
