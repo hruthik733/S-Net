@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # S-Net
 S-Net: A Novel Shallow Network for Enhanced Detail Retention in Medical Image Segmentation
 
@@ -47,3 +48,6 @@ python main.py --data BUSI_png_224 --epochs 120 --batch_size 16
           |——images
           |——masks
 ```
+=======
+# S-Net
+>>>>>>> d1a89d25ca8d34599a612c590fa403e2d50f0a8f
