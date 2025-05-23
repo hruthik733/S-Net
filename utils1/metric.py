@@ -349,13 +349,15 @@ def ravd(result, reference):
     result = result.cpu().numpy()
     reference = reference.cpu().numpy()
 
-    result = np.atleast_1d(result.astype(np.bool))
-    reference = np.atleast_1d(reference.astype(np.bool))
+    # hruthik :result = np.atleast_1d(result.astype(np.bool))
+    result = np.atleast_1d(result.astype(bool))
+    # reference = np.atleast_1d(reference.astype(np.bool))
+    reference = np.atleast_1d(reference.astype(bool))
 
     vol1 = np.count_nonzero(result)
     vol2 = np.count_nonzero(reference)
 
-    if 0 == vol2:
-        raise RuntimeError('The second supplied array does not contain any binary object.')
+    if vol2 == 0:
+        return np.nan
 
     return (vol1 - vol2) / float(vol2)

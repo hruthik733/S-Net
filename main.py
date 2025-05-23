@@ -4,6 +4,8 @@ import datetime
 import os
 import sys
 
+import torch.nn.functional as F
+
 import pandas as pd
 import imageio.v2 as imageio
 
@@ -22,6 +24,14 @@ from collections import OrderedDict
 from Models.Unet import Unet
 from Models.S_Net import S_Net
 
+# import matplotlib
+# matplotlib.use('Agg')  # Use non-GUI backend for scripts
+import numpy as np
+
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
 # os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 
@@ -37,56 +47,110 @@ from Models.S_Net import S_Net
 
 def main(args):
     # 定义所用设备是cpu还是gpu
-    device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
     if args.data == 'ISIC2018_png_224':
-        # 根据文件路径生成经过排序的图像文件名列表
-        image_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'image'), key=lambda x: x.split('.')[0].split('_')[-1])
-        label_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'label'), key=lambda x: x.split('_')[1])
-        # 生成完整的文件路径
-        image_path_list = [os.path.join(Path_dataset[args.data], 'image', x) for x in image_name_list]
-        label_path_list = [os.path.join(Path_dataset[args.data], 'label', x) for x in label_name_list]
-        path_list = (image_path_list, label_path_list)
-        # 根据所用数据集自动计算数据集大小，并自动拆分出训练集、验证集和测试集
-        index = [i for i in range(len(os.listdir(Path_dataset[args.data] + '/' + 'image')))]
-        train_index, test_and_val_index = train_test_split(index, test_size=0.3, random_state=45)
-        val_index,  test_index = train_test_split(test_and_val_index, test_size=0.66, random_state=45)
-        # 若需要进行交叉验证则则将epoch循环放在以下循环代码内
-        # kf = KFold(n_splits=args.n_splits, shuffle=False)
-        # for train_index, val_index in kf.split(train_and_val_index):
-        #     train_index = [train_and_val_index[i] for i in train_index]
-        #     val_index = [train_and_val_index[i] for i in val_index]
-        # 判断分割结果中的金标准文件夹是否有与测试数量相同的图片
-        if os.path.exists('./segment_result/gold_standard/ISIC2018/image'):
-            pass
-        else:
-            os.makedirs('./segment_result/gold_standard/ISIC2018/image')
-            os.makedirs('./segment_result/gold_standard/ISIC2018/label')
-        if len(os.listdir('./segment_result/gold_standard/ISIC2018/image')) != len(test_index):
-            for i in test_index:
-                image_path = image_path_list[i]
-                label_path = label_path_list[i]
-                # # 加载保存.pny格式图像
-                # image = np.load(image_path)
-                # label = np.load(label_path)
-                # np.save('./segment_result/gold_standard/' + image_path.split('/')[-1], image)
-                # np.save('./segment_result/gold_standard/' + label_path.split('/')[-1], label)
-                # 加载保存.png格式图像
-                image = imageio.imread(image_path)
-                label = imageio.imread(label_path)
-                imageio.imwrite('./segment_result/gold_standard/ISIC2018/image/' + image_path.split('/')[-1], image)
-                imageio.imwrite('./segment_result/gold_standard/ISIC2018/label/' + label_path.split('/')[-1], label)
-        print(f"训练集数量：{len(train_index)}，训练集索引：{train_index}")
-        print(f"验证集数量：{len(val_index)}，验证集索引：{val_index}")
-        print(f"测试集数量：{len(test_index)}，测试集索引：{test_index}")
+        # # 根据文件路径生成经过排序的图像文件名列表
+        # image_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'image'), key=lambda x: x.split('.')[0].split('_')[-1])
+        # label_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'label'), key=lambda x: x.split('_')[1])
+        # # 生成完整的文件路径
+        # image_path_list = [os.path.join(Path_dataset[args.data], 'image', x) for x in image_name_list]
+        # label_path_list = [os.path.join(Path_dataset[args.data], 'label', x) for x in label_name_list]
+        # path_list = (image_path_list, label_path_list)
+        # # 根据所用数据集自动计算数据集大小，并自动拆分出训练集、验证集和测试集
+        # index = [i for i in range(len(os.listdir(Path_dataset[args.data] + '/' + 'image')))]
+        # train_index, test_and_val_index = train_test_split(index, test_size=0.3, random_state=45)
+        # val_index,  test_index = train_test_split(test_and_val_index, test_size=0.66, random_state=45)
+        # # 若需要进行交叉验证则则将epoch循环放在以下循环代码内
+        # # kf = KFold(n_splits=args.n_splits, shuffle=False)
+        # # for train_index, val_index in kf.split(train_and_val_index):
+        # #     train_index = [train_and_val_index[i] for i in train_index]
+        # #     val_index = [train_and_val_index[i] for i in val_index]
+        # # 判断分割结果中的金标准文件夹是否有与测试数量相同的图片
+        # if os.path.exists('./segment_result/gold_standard/ISIC2018/image'):
+        #     pass
+        # else:
+        #     os.makedirs('./segment_result/gold_standard/ISIC2018/image')
+        #     os.makedirs('./segment_result/gold_standard/ISIC2018/label')
+        # if len(os.listdir('./segment_result/gold_standard/ISIC2018/image')) != len(test_index):
+        #     for i in test_index:
+        #         image_path = image_path_list[i]
+        #         label_path = label_path_list[i]
+        #         # # 加载保存.pny格式图像
+        #         # image = np.load(image_path)
+        #         # label = np.load(label_path)
+        #         # np.save('./segment_result/gold_standard/' + image_path.split('/')[-1], image)
+        #         # np.save('./segment_result/gold_standard/' + label_path.split('/')[-1], label)
+        #         # 加载保存.png格式图像
+        #         image = imageio.imread(image_path)
+        #         label = imageio.imread(label_path)
+        #         imageio.imwrite('./segment_result/gold_standard/ISIC2018/image/' + image_path.split('/')[-1], image)
+        #         imageio.imwrite('./segment_result/gold_standard/ISIC2018/label/' + label_path.split('/')[-1], label)
+        # print(f"训练集数量：{len(train_index)}，训练集索引：{train_index}")
+        # print(f"验证集数量：{len(val_index)}，验证集索引：{val_index}")
+        # print(f"测试集数量：{len(test_index)}，测试集索引：{test_index}")
 
-        # 定义训练集验证集，采用传入数据集索引的方式拆分训练验证测试集，方便进行数据打乱。
-        train_dataset = Dataset[args.data](path_list=path_list, index=train_index,
-                                           train_type='train', image_size=(224, 224), transform=dataset_transform)
-        val_dataset = Dataset[args.data](path_list=path_list, index=val_index,
-                                         train_type='val', image_size=(224, 224), transform=dataset_transform)
-        test_dataset = Dataset[args.data](path_list=path_list, index=test_index,
-                                          train_type='test', image_size=(224, 224), transform=dataset_transform)
+        # # 定义训练集验证集，采用传入数据集索引的方式拆分训练验证测试集，方便进行数据打乱。
+        # train_dataset = Dataset[args.data](path_list=path_list, index=train_index,
+        #                                    train_type='train', image_size=(224, 224), transform=dataset_transform)
+        # val_dataset = Dataset[args.data](path_list=path_list, index=val_index,
+        #                                  train_type='val', image_size=(224, 224), transform=dataset_transform)
+        # test_dataset = Dataset[args.data](path_list=path_list, index=test_index,
+        #                                   train_type='test', image_size=(224, 224), transform=dataset_transform)
+
+        base_path = './data/isic-dataset'
+        img_dirs = {
+            'train': os.path.join(base_path, 'data_train'),
+            'val': os.path.join(base_path, 'data_val'),
+            'test': os.path.join(base_path, 'data_test')
+        }
+        mask_dirs = {
+            'train': os.path.join(base_path, 'mask_train'),
+            'val': os.path.join(base_path, 'mask_val'),
+            'test': os.path.join(base_path, 'mask_test')
+        }
+
+        # Get image and label paths
+        def get_sorted_paths(img_dir, mask_dir):
+            images = sorted([os.path.join(img_dir, f) for f in os.listdir(img_dir)])
+            masks = sorted([os.path.join(mask_dir, f) for f in os.listdir(mask_dir)])
+            return images, masks
+
+        train_imgs, train_masks = get_sorted_paths(img_dirs['train'], mask_dirs['train'])
+        val_imgs, val_masks = get_sorted_paths(img_dirs['val'], mask_dirs['val'])
+        test_imgs, test_masks = get_sorted_paths(img_dirs['test'], mask_dirs['test'])
+
+        path_list = {
+            'train': (train_imgs, train_masks),
+            'val': (val_imgs, val_masks),
+            'test': (test_imgs, test_masks)
+        }
+
+        # Create gold standard directory for test set
+        gold_img_dir = './segment_result/gold_standard/ISIC2018/image'
+        gold_lbl_dir = './segment_result/gold_standard/ISIC2018/label'
+        os.makedirs(gold_img_dir, exist_ok=True)
+        os.makedirs(gold_lbl_dir, exist_ok=True)
+
+        if len(os.listdir(gold_img_dir)) != len(test_imgs):
+            for img_path, lbl_path in zip(test_imgs, test_masks):
+                image = imageio.imread(img_path)
+                label = imageio.imread(lbl_path)
+                imageio.imwrite(os.path.join(gold_img_dir, os.path.basename(img_path)), image)
+                imageio.imwrite(os.path.join(gold_lbl_dir, os.path.basename(lbl_path)), label)
+
+        print(f"训练集数量：{len(train_imgs)}")
+        print(f"验证集数量：{len(val_imgs)}")
+        print(f"测试集数量：{len(test_imgs)}")
+
+        # Create dataset instances
+        train_dataset = Dataset[args.data](path_list=path_list['train'], index=list(range(len(train_imgs))),
+                                        train_type='train', image_size=(224, 224), transform=dataset_transform)
+        val_dataset = Dataset[args.data](path_list=path_list['val'], index=list(range(len(val_imgs))),
+                                        train_type='val', image_size=(224, 224), transform=dataset_transform)
+        test_dataset = Dataset[args.data](path_list=path_list['test'], index=list(range(len(test_imgs))),
+                                        train_type='test', image_size=(224, 224), transform=dataset_transform)
+
 
     elif args.data == 'Kvasir_png_224':
         # 根据文件路径生成经过排序的图像文件名列表
@@ -133,48 +197,57 @@ def main(args):
                                           train_type='test', image_size=(224, 224), transform=dataset_transform)
 
     elif args.data == 'BUSI_png_224':
-        # 根据文件路径生成经过排序的图像文件名列表
+        # Get sorted lists of images and masks
         image_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'images'),
-                                 key=lambda x: x.split('.')[0])
-        label_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'masks'), key=lambda x: x.split('.')[0])
-        # 生成完整的文件路径
+                            key=lambda x: x.split('.')[0])
+        label_name_list = sorted(os.listdir(Path_dataset[args.data] + '/' + 'masks'),
+                            key=lambda x: x.split('.')[0])
+        
+        # Generate full paths
         image_path_list = [os.path.join(Path_dataset[args.data], 'images', x) for x in image_name_list]
         label_path_list = [os.path.join(Path_dataset[args.data], 'masks', x) for x in label_name_list]
         path_list = (image_path_list, label_path_list)
-        # 根据所用数据集自动计算数据集大小，并自动拆分出训练集、验证集和测试集
+        
+        # Split dataset
         index = [i for i in range(len(image_name_list))]
         train_index, test_and_val_index = train_test_split(index, test_size=0.3, random_state=45)
         val_index, test_index = train_test_split(test_and_val_index, test_size=0.66, random_state=45)
-        if os.path.exists('./segment_result/gold_standard/BUSI_224/image'):
-            pass
-        else:
-            os.makedirs('./segment_result/gold_standard/BUSI_224/image')
-            os.makedirs('./segment_result/gold_standard/BUSI_224/label')
+        
+        # Create directories if they don't exist
+        os.makedirs('./segment_result/gold_standard/BUSI_224/image', exist_ok=True)
+        os.makedirs('./segment_result/gold_standard/BUSI_224/label', exist_ok=True)
+        
+        # Process test set
         if len(os.listdir('./segment_result/gold_standard/BUSI_224/image')) != 2 * len(test_index):
             for i in test_index:
                 image_path = image_path_list[i]
                 label_path = label_path_list[i]
-                # # 加载保存.pny格式图像
-                # image = np.load(image_path)
-                # label = np.load(label_path)
-                # np.save('./segment_result/gold_standard/' + image_path.split('/')[-1], image)
-                # np.save('./segment_result/gold_standard/' + label_path.split('/')[-1], label)
-                # 加载保存.png格式图像
+                
+                # Read images and masks
                 image = imageio.imread(image_path)
                 label = imageio.imread(label_path)
-                imageio.imwrite('./segment_result/gold_standard/BUSI_224/image/' + image_path.split('/')[-1], image)
-                imageio.imwrite('./segment_result/gold_standard/BUSI_224/label/' + label_path.split('/')[-1], label)
+                
+                # Convert mask to binary (0-255) if needed
+                if label.dtype == bool:
+                    label = label.astype(np.uint8) * 255
+                elif np.max(label) <= 1:  # If values are between 0-1
+                    label = (label * 255).astype(np.uint8)
+                
+                # Save with original filenames
+                imageio.imwrite('./segment_result/gold_standard/BUSI_224/image/' + os.path.basename(image_path), image)
+                imageio.imwrite('./segment_result/gold_standard/BUSI_224/label/' + os.path.basename(label_path), label)
+        
         print(f"训练集数量：{len(train_index)}，训练集索引：{train_index}")
         print(f"验证集数量：{len(val_index)}，验证集索引：{val_index}")
         print(f"测试集数量：{len(test_index)}，测试集索引：{test_index}")
-
-        # 定义训练集验证集，采用传入数据集索引的方式拆分训练验证测试集，方便进行数据打乱。
+        
+        # Create datasets
         train_dataset = Dataset[args.data](path_list=path_list, index=train_index,
-                                           train_type='train', image_size=(224, 224), transform=dataset_transform)
+                                        train_type='train', image_size=(224, 224), transform=dataset_transform)
         val_dataset = Dataset[args.data](path_list=path_list, index=val_index,
-                                         train_type='val', image_size=(224, 224), transform=dataset_transform)
+                                    train_type='val', image_size=(224, 224), transform=dataset_transform)
         test_dataset = Dataset[args.data](path_list=path_list, index=test_index,
-                                          train_type='test', image_size=(224, 224), transform=dataset_transform)
+                                    train_type='test', image_size=(224, 224), transform=dataset_transform)
 
     # 定义num_workers数量，根据电脑不太不同
     num_workers = min([os.cpu_count(), args.batch_size if args.batch_size > 1 else 0])
@@ -236,7 +309,7 @@ def main(args):
     # lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2, eta_min=0.00001)
     # 根据验证集上的性能指标自动调整学习率
     lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode="max", factor=0.5, min_lr=1e-6, verbose=True, patience=6
+        optimizer, mode="max", factor=0.5, min_lr=1e-6, patience=6
     )
     # loss 用于训练网络更新参数，criterion用于验证网络效果选出最好的网络，两个可以一样
     # 创建train_acc.csv和var_acc.csv文件，记录loss和accuracy
@@ -345,6 +418,9 @@ def val(model, val_loader, criterion, device):
         # 输入图像计算输出
         output = model(image)   # 2,1,224,320
         output = output.detach()
+        if output.shape != label.shape:
+            label = F.interpolate(label, size=output.shape[2:], mode='bilinear', align_corners=True)
+
         score = criterion(output, label)
         # 针对2分类的一通道网络输出和二通道网络输出
         if output.shape[1] == 1:
@@ -398,6 +474,9 @@ def test(model, args, test_loader, device):
             output[output <= 0.5] = 0
         elif output.shape[1] == 2:
             output = torch.max(output, 1)[1].unsqueeze(dim=1)
+
+            
+        label = F.interpolate(label, size=output.shape[2:], mode='bilinear', align_corners=True)
         jc_, dice_ = iou_and_dice(output, label)
         iou = jc(output, label)
         dice = dc(output, label)

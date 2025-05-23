@@ -65,6 +65,10 @@ class randomcrop(object):
         """
         w, h = img.size
         th, tw = output_size
+
+        if w < tw or h < th:
+            raise ValueError(f"Requested crop size {(th, tw)} is bigger than input image size {(h, w)}.")
+
         if w == tw and h == th:
             return 0, 0, h, w
 
@@ -73,29 +77,25 @@ class randomcrop(object):
         return i, j, th, tw
 
     def __call__(self, img, lab):
-        """
-        Args:
-            img (PIL Image): Image to be cropped.
-            lab (PIL Image): Image to be cropped.
-
-        Returns:
-            PIL Image: Cropped image and mask.
-        """
         if self.padding > 0:
             img = TF.pad(img, self.padding)
             lab = TF.pad(lab, self.padding)
 
-        # pad the width if needed
-        if self.pad_if_needed and img.size[0] < self.size[1]:
-            img = TF.pad(img, (int((1 + self.size[1] - img.size[0]) / 2), 0))
-            lab = TF.pad(lab, (int((1 + self.size[1] - lab.size[0]) / 2), 0))
-        # pad the height if needed
-        if self.pad_if_needed and img.size[1] < self.size[0]:
-            img = TF.pad(img, (0, int((1 + self.size[0] - img.size[1]) / 2)))
-            lab = TF.pad(lab, (0, int((1 + self.size[0] - lab.size[1]) / 2)))
+        w, h = img.size
+        th, tw = self.size
+
+        # Auto pad small images
+        pad_left = max((tw - w) // 2, 0)
+        pad_top = max((th - h) // 2, 0)
+        pad_right = max(tw - w - pad_left, 0)
+        pad_bottom = max(th - h - pad_top, 0)
+
+        if pad_left > 0 or pad_top > 0 or pad_right > 0 or pad_bottom > 0:
+            padding = (pad_left, pad_top, pad_right, pad_bottom)
+            img = TF.pad(img, padding)
+            lab = TF.pad(lab, padding)
 
         i, j, h, w = self.get_params(img, self.size)
-
         return TF.crop(img, i, j, h, w), TF.crop(lab, i, j, h, w)
 
     def __repr__(self):
@@ -109,7 +109,8 @@ def dataset_transform(sample, train_type, image_size=(224, 224)):
     # label = ts.Compose([ts.ToTensor(), ts.Grayscale()])(label)
 
     image, label = Image.fromarray(np.uint8(image), mode='RGB'), \
-                   Image.fromarray(np.uint8(label), mode='L')  # “L” (灰度图), “RGB” (彩色图)
+               Image.fromarray(np.uint8(label[:, :, 0]) if label.ndim == 3 else np.uint8(label), mode='L')
+                                # “L” (灰度图), “RGB” (彩色图)
 
     if train_type == 'train':
         image, label = randomcrop(size=image_size)(image, label)

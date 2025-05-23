@@ -1,0 +1,345 @@
+训练集数量：700，训练集索引：[640, 357, 596, 833, 896, 206, 422, 228, 818, 840, 953, 871, 240, 156, 875, 470, 693, 468, 620, 272, 870, 917, 146, 849, 861, 249, 102, 980, 389, 947, 628, 6, 729, 882, 293, 125, 54, 46, 226, 298, 39, 688, 176, 724, 258, 933, 216, 937, 988, 673, 409, 768, 329, 413, 999, 192, 641, 945, 745, 562, 559, 838, 274, 654, 126, 478, 61, 383, 182, 938, 437, 285, 897, 79, 740, 428, 59, 28, 358, 668, 885, 517, 384, 545, 702, 25, 317, 372, 118, 677, 766, 719, 209, 778, 294, 963, 627, 18, 229, 172, 887, 395, 412, 962, 325, 499, 305, 551, 801, 32, 951, 706, 179, 772, 820, 844, 230, 767, 506, 932, 103, 723, 734, 131, 408, 926, 900, 771, 687, 929, 869, 476, 448, 525, 161, 392, 13, 568, 14, 685, 588, 153, 915, 138, 22, 353, 758, 273, 283, 821, 91, 977, 217, 696, 813, 57, 359, 436, 306, 872, 344, 188, 202, 82, 186, 753, 149, 792, 73, 603, 812, 935, 50, 284, 326, 139, 550, 728, 528, 851, 836, 405, 923, 939, 134, 74, 410, 663, 312, 449, 251, 388, 346, 681, 318, 135, 35, 984, 299, 336, 705, 168, 608, 8, 416, 335, 837, 183, 714, 750, 267, 301, 700, 108, 864, 546, 113, 564, 781, 618, 890, 275, 201, 684, 122, 190, 731, 894, 609, 40, 341, 822, 703, 492, 783, 429, 425, 579, 710, 481, 123, 532, 952, 159, 142, 239, 611, 581, 867, 441, 259, 600, 904, 136, 345, 981, 878, 960, 291, 537, 974, 774, 464, 455, 807, 360, 424, 407, 966, 733, 391, 150, 453, 496, 707, 484, 969, 352, 447, 678, 931, 20, 541, 47, 614, 735, 973, 811, 921, 732, 650, 558, 119, 552, 174, 269, 712, 565, 148, 522, 934, 222, 338, 328, 672, 157, 375, 540, 991, 834, 289, 746, 606, 129, 45, 630, 515, 633, 402, 874, 403, 460, 187, 194, 72, 911, 965, 616, 90, 469, 624, 442, 433, 504, 692, 457, 967, 271, 415, 121, 376, 995, 787, 302, 151, 533, 827, 323, 141, 296, 400, 909, 755, 850, 862, 386, 219, 303, 334, 512, 109, 87, 823, 371, 877, 597, 279, 218, 955, 736, 220, 928, 177, 80, 879, 863, 669, 397, 903, 832, 716, 58, 1, 629, 263, 848, 435, 421, 936, 430, 956, 761, 95, 12, 83, 105, 494, 356, 682, 193, 943, 252, 450, 757, 586, 244, 805, 307, 140, 689, 41, 292, 665, 744, 686, 261, 115, 626, 578, 776, 664, 406, 507, 300, 280, 16, 333, 743, 366, 178, 97, 571, 574, 666, 625, 925, 797, 543, 511, 340, 205, 803, 601, 704, 950, 53, 379, 961, 501, 699, 842, 538, 444, 676, 236, 808, 946, 56, 130, 865, 990, 789, 817, 489, 361, 986, 432, 852, 509, 330, 764, 780, 916, 255, 348, 351, 277, 941, 320, 655, 43, 373, 199, 548, 907, 959, 445, 117, 621, 708, 927, 553, 295, 972, 674, 465, 31, 314, 711, 29, 440, 78, 238, 924, 652, 213, 742, 94, 245, 287, 631, 694, 495, 855, 235, 37, 443, 610, 475, 594, 779, 34, 602, 68, 593, 730, 561, 426, 784, 500, 975, 721, 920, 241, 868, 968, 635, 563, 86, 473, 531, 717, 242, 636, 364, 996, 555, 998, 411, 107, 114, 816, 964, 695, 85, 659, 647, 942, 165, 493, 819, 308, 55, 901, 985, 304, 390, 93, 438, 175, 795, 454, 71, 2, 70, 679, 639, 587, 535, 741, 324, 590, 254, 983, 7, 434, 106, 247, 508, 958, 155, 713, 521, 265, 788, 439, 599, 786, 27, 211, 185, 572, 567, 451, 463, 477, 81, 763, 5, 88, 311, 895, 92, 970, 315, 144, 760, 488, 160, 198, 989, 310, 617, 316, 754, 698, 203, 940, 288, 539, 615, 278, 98, 319, 994, 233, 367, 152, 505, 756, 912, 566, 42, 831, 765, 715, 891, 77, 49, 648, 232, 523, 554, 876, 518, 401, 207, 189, 697, 420, 598, 799, 36, 490, 270, 824, 158, 638, 110, 196, 486, 17, 268, 24, 380, 930, 908, 181, 264, 814, 215, 456, 886, 569, 309, 398, 577, 15, 632, 377, 580, 163, 725, 957, 607, 544, 892, 643, 414, 971]
+验证集数量：102，验证集索引：[60, 556, 347, 342, 576, 69, 845, 683, 825, 843, 404, 796, 570, 592, 634, 738, 519, 785, 30, 143, 479, 922, 847, 137, 524, 337, 290, 23, 200, 853, 116, 589, 458, 276, 11, 644, 658, 363, 171, 826, 884, 350, 208, 164, 798, 997, 10, 513, 858, 394, 902, 748, 612, 782, 918, 147, 667, 651, 573, 859, 96, 48, 846, 534, 913, 530, 806, 327, 339, 365, 180, 881, 132, 485, 431, 257, 948, 184, 839, 370, 234, 378, 982, 191, 830, 169, 396, 459, 752, 623, 910, 313, 649, 266, 52, 661, 502, 898, 51, 418, 75, 474]
+测试集数量：198，测试集索引：[417, 204, 660, 173, 613, 802, 595, 225, 979, 919, 804, 223, 224, 462, 622, 214, 978, 726, 349, 737, 860, 297, 536, 976, 653, 89, 162, 873, 637, 467, 549, 993, 709, 127, 880, 645, 516, 44, 369, 769, 906, 246, 461, 773, 243, 791, 19, 619, 145, 419, 751, 38, 701, 883, 899, 889, 759, 720, 26, 657, 33, 718, 427, 354, 582, 446, 605, 170, 387, 282, 212, 762, 260, 250, 253, 331, 382, 76, 680, 498, 0, 133, 101, 286, 949, 167, 747, 646, 111, 510, 362, 670, 503, 124, 385, 662, 332, 84, 800, 514, 905, 526, 992, 841, 393, 237, 381, 835, 671, 944, 604, 4, 112, 64, 154, 399, 527, 491, 21, 856, 893, 547, 227, 197, 656, 374, 100, 987, 466, 794, 62, 954, 810, 3, 770, 480, 262, 691, 452, 829, 210, 727, 423, 471, 248, 591, 63, 221, 585, 828, 749, 642, 483, 343, 281, 195, 321, 584, 854, 777, 472, 542, 166, 520, 529, 256, 560, 809, 497, 104, 583, 368, 99, 888, 65, 128, 675, 857, 482, 355, 739, 690, 775, 557, 120, 815, 722, 575, 914, 322, 9, 793, 866, 67, 231, 790, 487, 66]
+time             2025-04-10 14:16:42
+id               S_Net
+data             Kvasir_png_224
+n_splits         5
+save_path        ./save_model/
+epochs           120
+early_stop       150
+batch_size       16
+lr               0.001
+momentum         0.9
+weight_decay     0.0001
+--------------------------------------------------
+Network Architecture of Model S_Net:
+S_Net(
+  (encoder1): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+  )
+  (encoder2): Sequential(
+    (0): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    (1): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+  )
+  (GLFFs): GLFFs(
+    (layers): ModuleList(
+      (0): GLFF(
+        (blocks): ModuleList(
+          (0): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.0)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.0, inplace=False)
+            )
+          )
+          (1): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.014285714365541935)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.014285714365541935, inplace=False)
+            )
+          )
+        )
+        (conv_layer): MSFF(
+          (conv0): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=64)
+          (conv0_1): Conv2d(64, 64, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), groups=64)
+          (conv0_2): Conv2d(64, 64, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), groups=64)
+          (conv1_1): Conv2d(64, 64, kernel_size=(1, 11), stride=(1, 1), padding=(0, 5), groups=64)
+          (conv1_2): Conv2d(64, 64, kernel_size=(11, 1), stride=(1, 1), padding=(5, 0), groups=64)
+          (conv2_1): Conv2d(64, 64, kernel_size=(1, 21), stride=(1, 1), padding=(0, 10), groups=64)
+          (conv2_2): Conv2d(64, 64, kernel_size=(21, 1), stride=(1, 1), padding=(10, 0), groups=64)
+          (conv12): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (drop): timm.DropPath(0)
+        )
+      )
+      (1): GLFF(
+        (blocks): ModuleList(
+          (0): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.02857142873108387)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.02857142873108387, inplace=False)
+            )
+          )
+          (1): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.04285714402794838)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.04285714402794838, inplace=False)
+            )
+          )
+        )
+        (conv_layer): MSFF(
+          (conv0): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=64)
+          (conv0_1): Conv2d(64, 64, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), groups=64)
+          (conv0_2): Conv2d(64, 64, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), groups=64)
+          (conv1_1): Conv2d(64, 64, kernel_size=(1, 11), stride=(1, 1), padding=(0, 5), groups=64)
+          (conv1_2): Conv2d(64, 64, kernel_size=(11, 1), stride=(1, 1), padding=(5, 0), groups=64)
+          (conv2_1): Conv2d(64, 64, kernel_size=(1, 21), stride=(1, 1), padding=(0, 10), groups=64)
+          (conv2_2): Conv2d(64, 64, kernel_size=(21, 1), stride=(1, 1), padding=(10, 0), groups=64)
+          (conv12): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (drop): timm.DropPath(0)
+        )
+      )
+      (2): GLFF(
+        (blocks): ModuleList(
+          (0): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.05714285746216774)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.05714285746216774, inplace=False)
+            )
+          )
+          (1): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.0714285746216774)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.0714285746216774, inplace=False)
+            )
+          )
+        )
+        (conv_layer): MSFF(
+          (conv0): Conv2d(64, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2), groups=64)
+          (conv0_1): Conv2d(64, 64, kernel_size=(1, 7), stride=(1, 1), padding=(0, 3), groups=64)
+          (conv0_2): Conv2d(64, 64, kernel_size=(7, 1), stride=(1, 1), padding=(3, 0), groups=64)
+          (conv1_1): Conv2d(64, 64, kernel_size=(1, 11), stride=(1, 1), padding=(0, 5), groups=64)
+          (conv1_2): Conv2d(64, 64, kernel_size=(11, 1), stride=(1, 1), padding=(5, 0), groups=64)
+          (conv2_1): Conv2d(64, 64, kernel_size=(1, 21), stride=(1, 1), padding=(0, 10), groups=64)
+          (conv2_2): Conv2d(64, 64, kernel_size=(21, 1), stride=(1, 1), padding=(10, 0), groups=64)
+          (conv12): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1))
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (drop): timm.DropPath(0)
+        )
+      )
+      (3): GLFF(
+        (blocks): ModuleList(
+          (0): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.08571428805589676)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.08571428805589676, inplace=False)
+            )
+          )
+          (1): VSS_ConvG(
+            (ln_1): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (self_attention): SS2D(
+              (in_proj): Linear(in_features=64, out_features=256, bias=False)
+              (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=128)
+              (act): SiLU()
+              (out_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+              (out_proj): Linear(in_features=128, out_features=64, bias=False)
+            )
+            (drop_path): timm.DropPath(0.10000000149011612)
+            (ln_2): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+            (mlp): ConvolutionalGLU(
+              (fc1): Linear(in_features=64, out_features=84, bias=True)
+              (dwconv): DWConv(
+                (dwconv): Conv2d(42, 42, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), groups=42)
+              )
+              (act): SiLU()
+              (fc2): Linear(in_features=42, out_features=64, bias=True)
+              (drop): Dropout(p=0.10000000149011612, inplace=False)
+            )
+          )
+        )
+      )
+    )
+    (norm): LayerNorm((64,), eps=1e-05, elementwise_affine=True)
+  )
+  (decoder1): Sequential(
+    (0): conv_block(
+      (conv): Sequential(
+        (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): res_conv_block2(
+      (conv): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (relu): ReLU()
+    )
+    (2): res_conv_block2(
+      (conv): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (relu): ReLU()
+    )
+  )
+  (decoder2): Sequential(
+    (0): conv_block(
+      (conv): Sequential(
+        (0): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (5): ReLU(inplace=True)
+      )
+    )
+    (1): res_conv_block2(
+      (conv): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (relu): ReLU()
+    )
+    (2): res_conv_block2(
+      (conv): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+        (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (relu): ReLU()
+    )
+  )
+  (final): Sequential(
+    (0): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1), bias=False)
+    (1): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+)
+--------------------------------------------------
+Number of trainable parameters 1522306 in Model S_Net
+Epoch:0/120, lr:0.001

@@ -4,7 +4,7 @@ import PIL
 import torch
 import numpy as np
 # import nibabel as nib
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from os import listdir
 from os.path import join
@@ -39,32 +39,46 @@ class ISIC2018_dataset(Dataset):
     def __getitem__(self, item: int):
         image_name = self.image_path_list[item]
         label_name = self.label_path_list[item]
-        if image_name.split('.')[-1] == 'npy':
-            # 加载.npy格式的图片
-            image = np.load(image_name)
-        elif image_name.split('.')[-1] == 'png':
-            # 加载.png格式的数据
-            image = imageio.imread(image_name)
 
-        if label_name.split('.')[-1] == 'npy':
-            # 加载.npy格式的图片
-            label = np.load(label_name)
-        elif label_name.split('.')[-1] == 'png':
-            # 加载.png格式的数据
-            label = imageio.imread(label_name)
+        fallback_shape = (224, 224)
 
-        name = self.image_path_list[item].split('/')[-1]
+        # Load image
+        try:
+            ext = os.path.splitext(image_name)[-1].lower()
+            if ext == '.npy':
+                image = np.load(image_name)
+            elif ext in ['.png', '.jpg', '.jpeg']:
+                image = imageio.imread(image_name)
+            else:
+                raise ValueError("Unsupported image format")
+        except Exception as e:
+            print(f"[ERROR] Failed to load image {image_name}: {e}")
+            image = np.zeros((*fallback_shape, 3), dtype=np.uint8)
 
+        # Load label
+        try:
+            ext = os.path.splitext(label_name)[-1].lower()
+            if ext == '.npy':
+                label = np.load(label_name)
+            elif ext in ['.png', '.jpg', '.jpeg']:
+                label = imageio.imread(label_name)
+            else:
+                raise ValueError("Unsupported label format")
+        except Exception as e:
+            print(f"[ERROR] Failed to load label {label_name}: {e}")
+            label = np.zeros(fallback_shape, dtype=np.uint8)
+
+        name = os.path.basename(image_name)
         sample = {'image': image, 'label': label}
 
         if self.transform is not None:
-            # TODO: transformation to argument datasets
             sample = self.transform(sample, self.train_type, self.img_size)
 
         if self.train_type in ['test']:
             return name, sample['image'], sample['label']
         else:
             return sample['image'], sample['label']
+
 
     def __len__(self):
         return len(self.image_path_list)

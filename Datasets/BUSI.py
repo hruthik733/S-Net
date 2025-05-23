@@ -4,7 +4,7 @@ import PIL
 import torch
 import numpy as np
 # import nibabel as nib
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 from os import listdir
 from os.path import join
